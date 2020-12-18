@@ -192,11 +192,8 @@ app.post(`/backend`, upload.single('image'), (req, res)=>{
 
 });
 
-app.get('/test', (req,res)=>{
-	console.log("get request done");
-	res.type("application/json");
-	res.status(200).json({"result":"done"});
-})
+app.use(express.static(__dirname+'/dist/frontend'));
+
 
 startApp(app, pool);
 
