@@ -127,8 +127,6 @@ const startApp = async (app, pool) => {
 	}
 }
 
-
-
 //MySQL queries
 const loginSQL = "SELECT * FROM user where user_id = ? && password = ?";
 
@@ -168,9 +166,10 @@ app.post(`/backend`, upload.single('image'), (req, res)=>{
 	// })
 
 	const doc = mongoParams(req.body)
-	readFile(req.body.path)//.image)
-		.then(buff => 
-			putObject(req.file, buff, s3)
+	readFile(req.file.path)
+		.then(buff => {
+			console.log(buff);
+			putObject(req.file, buff, s3);}
 		)
 		.then(() => 
 			mongoClient.db(DATABASE).collection(COLLECTION)
@@ -193,7 +192,6 @@ app.post(`/backend`, upload.single('image'), (req, res)=>{
 });
 
 app.use(express.static(__dirname+'/dist/frontend'));
-
 
 startApp(app, pool);
 
